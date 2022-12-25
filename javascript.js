@@ -50,7 +50,8 @@ function playRound(playerSelection, computerSelection) {
             break;
 
         default:
-            console.log("error");
+            alert("game aborted")
+            return;
             break;
     }
 

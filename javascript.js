@@ -1,133 +1,163 @@
 function getComputerChoice() {
+  // Initialize a variable 'randomNumber' with the value of a random number
+  // from 0 to 1 (0 < n < 1)
 
-    // Initialize a variable 'randomNumber' with the value of a random number
-    // from 0 to 1 (0 < n < 1) 
+  let randomNumber = Math.random();
 
-    let randomNumber = Math.random();
-    
-    // if randomNumber <= 0.333 assign computerChoice to 'Rock'
-    // else if randomNumber <= 0.666 assign computerChoice to 'Paper'
-    // otherwise assign it to 'Scissors'
+  // if randomNumber <= 0.333 assign computerChoice to 'Rock'
+  // else if randomNumber <= 0.666 assign computerChoice to 'Paper'
+  // otherwise assign it to 'Scissors'
 
-    let computerChoice = (randomNumber <= 0.333) ? 'Rock' :
-                         (randomNumber <= 0.666) ? 'Paper' :
-                         'Scissors';
-    
+  let computerChoice =
+    randomNumber <= 0.333
+      ? "Rock"
+      : randomNumber <= 0.666
+      ? "Paper"
+      : "Scissors";
 
-    return computerChoice;
+  return computerChoice;
 }
 
 function playRound(playerSelection, computerSelection) {
+  // make playerSelection and computerSelection lowerCase to reduce ambiguity
 
-    // make playerSelection and computerSelection lowerCase to reduce ambiguity
+  playerSelection = playerSelection.toLowerCase();
+  computerSelection = computerSelection.toLowerCase();
 
-    playerSelection = playerSelection.toLowerCase();
-    computerSelection = computerSelection.toLowerCase();
+  let winOrLose;
+  let beatOrGetsBeaten;
 
-    let winOrLose;
-    let beatOrGetsBeaten;
+  // decide the winner
 
-    // decide the winner
+  switch (true) {
+    case playerSelection == "rock" && computerSelection == "scissors":
+    case playerSelection == "paper" && computerSelection == "rock":
+    case playerSelection == "scissors" && computerSelection == "paper":
+      winOrLose = "Won";
+      beatOrGetsBeaten = "beats";
+      break;
 
-    switch (true) {
-        case (playerSelection == 'rock' && computerSelection == 'scissors'):
-        case (playerSelection == 'paper' && computerSelection == 'rock'):
-        case (playerSelection == 'scissors' && computerSelection == 'paper'):
-            winOrLose = "Won";
-            beatOrGetsBeaten = "beats";
-            break;
+    case playerSelection == "rock" && computerSelection == "paper":
+    case playerSelection == "paper" && computerSelection == "scissors":
+    case playerSelection == "scissors" && computerSelection == "rock":
+      winOrLose = "Lost";
+      beatOrGetsBeaten = "gets beaten by";
+      break;
 
-        case (playerSelection == 'rock' && computerSelection == 'paper'):
-        case (playerSelection == 'paper' && computerSelection == 'scissors'):
-        case (playerSelection == 'scissors' && computerSelection == 'rock'):
-            winOrLose = "Lost";
-            beatOrGetsBeaten = "gets beaten by";
-            break;
+    case playerSelection == computerSelection:
+      winOrLose = "Tied";
+      beatOrGetsBeaten = "is the same as";
+      break;
 
-        case (playerSelection == computerSelection):
-            winOrLose = "Tied";
-            beatOrGetsBeaten = "is the same as";
-            break;
+    default:
+      alert("game aborted");
+      return;
+      break;
+  }
 
-        default:
-            alert("game aborted")
-            return;
-            break;
-    }
+  // return an array containing the response and whether the game is won or not
 
-    // return an array containing the response and whether the game is won or not
+  return [
+    `Game ${winOrLose}!, ${playerSelection} ${beatOrGetsBeaten} ${computerSelection}!`,
+    winOrLose == "Won" ? true : winOrLose == "Tied" ? null : false,
+  ];
+}
 
-    return (
-[
-`Game ${winOrLose}!, ${playerSelection} ${beatOrGetsBeaten} ${computerSelection}!`,
-(winOrLose == "Won") ? true : (winOrLose == "Tied") ? null : false
-]
-    );
+function detectNode(node) {
+  if (node === "👊") return "Rock";
+  else if (node === "📃") return "Paper";
+  else if (node === "✂") return "Scissors";
 }
 
 function game() {
+  const gameArea = document.querySelector(".game-area");
+  const optionsContainers = [
+    document.createElement("div"),
+    document.createElement("div"),
+    document.createElement("div"),
+  ];
 
-    // greeting
+  // build game scoreboard and it's sections
 
-    alert("ITS THE GAME OF ROCK PAPER SCISSORS! are you ready?");
-    let playerPoints = 0;
-    let computerPoints = 0;
+  const scoreboard = document.createElement("div");
+  const upper = document.createElement("div");
+  const lower = document.createElement("div");
 
-    for (let index = 0; index < 5; index++) {
+  // build the scoreboards
 
-        // start round
+  const computerArea = document.createElement("div");
+  const playerArea = document.createElement("div");
 
-        const playerInput = prompt(`Round ${index + 1}! What's your choice?\n'Rock', 'Paper' or 'Scissors'`)
-        
-        // store the results
-        
-        const result = playRound(playerInput, getComputerChoice());
+  const computerList = document.createElement("ul");
+  const playerList = document.createElement("ul");
 
-        // alert the greeting
+  // build the greeting box
 
-        alert(result[0])
+  const greetingBox = document.createElement("p");
 
-        // if won then increase playerPoints otherwise increase computerPoints
+  // add classes
 
-        if (result[1] === true) {
-            playerPoints++;
-        } else if (result[1] === false) {
-            computerPoints++;
-        } else {
-            playerPoints += 1/2;
-            computerPoints += 1/2;
-        }
+  scoreboard.classList.toggle("scoreboard");
+  upper.classList.toggle("upper");
+  lower.classList.toggle("lower");
+  computerArea.classList.toggle("scoreboard-area");
+  playerArea.classList.toggle("scoreboard-area");
+  computerList.classList.toggle("scoreboard-list");
+  playerList.classList.toggle("scoreboard-list");
+  greetingBox.classList.toggle("greeting-box");
+
+  // add textContent to lists and greeting box
+
+  computerList.innerHTML = "<li>POINTS</li>";
+  playerList.innerHTML = "<li>POINTS</li>";
+
+  greetingBox.textContent =
+    "You'll be displayed with what happened this round right here.";
+
+  // make them appear in the document
+
+  document.body.appendChild(scoreboard);
+  scoreboard.appendChild(upper);
+  scoreboard.appendChild(lower);
+  upper.appendChild(computerArea);
+  upper.appendChild(playerArea);
+  computerArea.appendChild(computerList);
+  playerArea.appendChild(playerList);
+  lower.appendChild(greetingBox);
+
+  optionsContainers.forEach((container) => {
+    container.classList.add("option-container");
+
+    switch (optionsContainers.indexOf(container) + 1) {
+      case 1:
+        container.textContent = "👊";
+        break;
+
+      case 2:
+        container.textContent = "📃";
+        break;
+
+      case 3:
+        container.textContent = "✂";
+        break;
+
+      default:
+        container.textContent = "NODE NOT FOUND";
     }
 
-    // declare variable winner
+    gameArea.appendChild(container);
 
-    let winner;
+    // actually plays the game
 
-    // check who the winner is
+    container.addEventListener("click", () => {
+      let roundResult = playRound(
+        detectNode(container.textContent),
+        getComputerChoice()
+      );
 
-    if (playerPoints > computerPoints) {
-        winner = "You";
-    } else if (playerPoints < computerPoints) {
-        winner = "The Computer";
-    } else {
-        winner = "Nobody";
-    }
-
-    // final greeting showing final result points
-
-    alert(
-`${winner} won! You had ${playerPoints} and the Computer had ${computerPoints}!`
-        );
-
-        // ask if the player wants to play again
-
-    let playAgain = confirm("Do you want to play again?");
-
-    if (playAgain) {
-        game();
-    }
+      console.log(roundResult);
+    });
+  });
 }
-
-// start game
 
 game();

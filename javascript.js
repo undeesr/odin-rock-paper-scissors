@@ -1,3 +1,7 @@
+let computerPoints = 0;
+let playerPoints = 0;
+let counter = 0;
+
 function getComputerChoice() {
   // Initialize a variable 'randomNumber' with the value of a random number
   // from 0 to 1 (0 < n < 1)
@@ -58,7 +62,7 @@ function playRound(playerSelection, computerSelection) {
   // return an array containing the response and whether the game is won or not
 
   return [
-    `Game ${winOrLose}!, ${playerSelection} ${beatOrGetsBeaten} ${computerSelection}!`,
+    `Round ${winOrLose}!, ${playerSelection} ${beatOrGetsBeaten} ${computerSelection}!`,
     winOrLose == "Won" ? true : winOrLose == "Tied" ? null : false,
   ];
 }
@@ -119,8 +123,8 @@ function game() {
   document.body.appendChild(scoreboard);
   scoreboard.appendChild(upper);
   scoreboard.appendChild(lower);
-  upper.appendChild(computerArea);
   upper.appendChild(playerArea);
+  upper.appendChild(computerArea);
   computerArea.appendChild(computerList);
   playerArea.appendChild(playerList);
   lower.appendChild(greetingBox);
@@ -150,14 +154,72 @@ function game() {
     // actually plays the game
 
     container.addEventListener("click", () => {
-      let roundResult = playRound(
-        detectNode(container.textContent),
-        getComputerChoice()
-      );
+      if (counter < 3) {
+        displayResult(container, computerList, playerList, greetingBox);
+      } else {
+        displayResult(container, computerList, playerList, greetingBox);
+        let condition =
+          playerPoints > computerPoints
+            ? true
+            : playerPoints < computerPoints
+            ? false
+            : null;
+        computerList.innerHTML = "<li>POINTS</li>";
+        playerList.innerHTML = "<li>POINTS</li>";
 
-      console.log(roundResult);
+        let ctx = "";
+
+        switch (condition) {
+          case true:
+            ctx += `You win! You score more points ${playerPoints}-${computerPoints}. Click another node to start a new game`;
+            break;
+
+          case false:
+            ctx += `You lose! The computer scores more points ${playerPoints}-${computerPoints}. Click another node to start a new game`;
+            break;
+
+          case null:
+            ctx += `Tied! both have same amount of points ${playerPoints}-${computerPoints}. Click another node to start a new game`;
+            break;
+        }
+
+        counter = -1;
+        computerPoints = 0;
+        playerPoints = 0;
+
+        greetingBox.textContent = ctx;
+      }
     });
   });
+}
+
+function displayResult(ctr, cl, pl, gb) {
+  let roundResult = playRound(detectNode(ctr.textContent), getComputerChoice());
+  counter++;
+
+  switch (roundResult[1]) {
+    case true:
+      pl.innerHTML += `<li>1</li>`;
+      cl.innerHTML += `<li>0</li>`;
+      playerPoints++;
+      break;
+
+    case false:
+      cl.innerHTML += `<li>1</li>`;
+      pl.innerHTML += `<li>0</li>`;
+      computerPoints++;
+      break;
+
+    case null:
+      pl.innerHTML += `<li>1/2</li>`;
+      cl.innerHTML += `<li>1/2</li>`;
+      playerPoints += 0.5;
+      computerPoints += 0.5;
+      break;
+  }
+
+  gb.textContent = roundResult[0];
+  console.log(roundResult);
 }
 
 game();

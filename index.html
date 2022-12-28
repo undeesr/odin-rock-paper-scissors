@@ -1,12 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>Rock Paper Scissors</title>
-        <script src="javascript.js"></script>
-    </head>
-    <body>
-        <h1>ROCK PAPER SCISSORS</h1>
-        <p>Refresh or type "game()" in the console to play again!</p>
-    </body>
+  <head>
+    <meta charset="utf-8" />
+    <title>Rock Paper Scissors</title>
+    <script src="javascript.js" defer></script>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <h1 class="page-title">ROCK PAPER SCISSORS</h1>
+    <div class="game-instructions">
+      <h2 class="heading-2">INSTRUCTIONS:</h2>
+      <p class="instructions-para">
+        Click on the <strong>'Start Game'</strong> button to start the game.
+      </p>
+    </div>
+    <button id="start-game">Start Game</button>
+
+    <!-- This is where the game takes place -->
+
+    <div class="game-area"></div>
+  </body>
 </html>

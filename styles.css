@@ -1,0 +1,78 @@
+body {
+  background-color: burlywood;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+.page-title {
+  text-align: center;
+  font-size: 48px;
+  font-weight: 1000;
+  color: darkred;
+  text-decoration: underline brown 12px;
+}
+
+.game-instructions {
+  border: 2px solid black;
+  box-shadow: 0 0 5px black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  background: linear-gradient(
+    to bottom right,
+    brown,
+    burlywood 20%,
+    burlywood 80%,
+    brown
+  );
+}
+
+.heading-2 {
+  font-size: 40px;
+  font-weight: 800;
+  margin: 10px auto;
+}
+
+#start-game {
+  margin: 50px auto;
+  display: block;
+  padding: 12px;
+  font-size: 24px;
+  font-weight: 700;
+  background: black;
+  color: white;
+}
+
+#start-game:hover {
+  background: white;
+  color: black;
+}
+
+.game-area {
+  display: flex;
+  padding: 24px;
+  height: 200px;
+  background-color: white;
+  border-radius: 12px;
+  gap: 12px;
+}
+
+.option-container {
+    background-color: black;
+    flex: auto;
+    height: 100%;
+    color: white;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 64px;
+    border: 2px solid sienna;
+    user-select: none;
+}
+
+.option-container:hover {
+  background-color: white;
+  color: black;
+}

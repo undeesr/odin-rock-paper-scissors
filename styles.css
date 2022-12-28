@@ -76,3 +76,49 @@ body {
   background-color: white;
   color: black;
 }
+
+.scoreboard {
+  height: 400px;
+  padding: 16px;
+  background: saddlebrown;
+  border-radius: 16px;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.upper, .lower {
+  background-color: sandybrown;
+  border-radius: 16px;
+}
+
+.upper {
+  flex: 3 1 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  box-sizing: border-box;
+  gap: 20px;
+}
+
+.lower {
+  flex: 1 1 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+p.greeting-box {
+  text-align: center;
+}
+
+.scoreboard-area {
+  flex: 1;
+  display: flex;
+  background-color: blanchedalmond;
+  justify-content: center;
+  height: 100%;
+  border-radius: 12px;
+}
